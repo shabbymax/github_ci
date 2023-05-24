@@ -8,6 +8,13 @@ deploy_job:
   tags:
     - be-run
   before_script:
+  
+    - whoami
+    - pwd
+    - locate npm
+    - echo ${PATH}
+    - which npm
+    - ls -lh $(which npm)
  
     - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
     - eval $(ssh-agent -s)
