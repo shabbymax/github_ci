@@ -4,7 +4,7 @@ stages:
 
 deploy_job:
   stage: deploy
-  image: npm:latest
+  image: node:latest
   tags:
     - be-run
   before_script:
