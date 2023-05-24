@@ -14,8 +14,9 @@ deploy_job:
     - mkdir -p ~/.ssh
     - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
   script:
+    - ssh $SSH_USER@$SSH_HOST "cd /home/fusion/Workspace/bookstore/backend; git pull origin main"
     - ssh $SSH_USER@$SSH_HOST "cd /home/ubuntu/projects/bookstore-back/backend; npm i"
     - ssh $SSH_USER@$SSH_HOST "cd /home/ubuntu/projects/bookstore-back/backend; npm run build"
-    - ssh $SSH_USER@$SSH_HOST "cd /home/ubuntu/projects/bookstore-back/backend; pm2 start npm --name "backend" -- start"
+    - ssh $SSH_USER@$SSH_HOST "cd /home/ubuntu/projects/bookstore-back/backend; pm2 reload backend"
   only:
     - main
