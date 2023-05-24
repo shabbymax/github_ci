@@ -7,6 +7,9 @@ import { userRouter } from './userRouters';
 
 export const generalRouter = express.Router();
 
+generalRouter.use('/test', (req, res) => {
+  res.status(StatusCodes.OK).json({ data: 'I am testing response' });
+})
 generalRouter.use('/user', userRouter);
 generalRouter.use('/auth', authRouter);
 generalRouter.use('/book', bookRouter);
