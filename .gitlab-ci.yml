@@ -8,11 +8,8 @@ deploy_job:
   tags:
     - be-run
   before_script:
-   
-    - su - fusion 
-   
-    - whoami
-
+ 
+    - export PATH=$PATH://home/fusion/Workspace/bookstore/backend
     - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
     - eval $(ssh-agent -s)
     - ssh-add <(echo "$SSH_PRIVATE_KEY")
