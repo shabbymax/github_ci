@@ -19,6 +19,6 @@ deploy_job:
     - ssh $SSH_USER@$SSH_HOST "cd /home/fusion/Workspace/bookstore/backend; git pull origin main"
     - ssh $SSH_USER@$SSH_HOST "cd /home/fusion/Workspace/bookstore/backend; npm install"
     - ssh $SSH_USER@$SSH_HOST "cd /home/fusion/Workspace/bookstore/backend; npm run build"
-    - ssh $SSH_USER@$SSH_HOST "cd /home/fusion/Workspace/bookstore/backend; pm2 reload 0"
+    - ssh $SSH_USER@$SSH_HOST "cd /home/fusion/Workspace/bookstore/backend; pm2 restart 0"
   only:
     - main
