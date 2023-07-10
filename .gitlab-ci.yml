@@ -1,24 +1,18 @@
-#image: docker:latest
-stages:
-  - deploy
-
-deploy_job:
-  stage: deploy
-  image: node:latest
-  tags:
-    - be-run
-  before_script:
- 
-    - export PATH=$PATH://home/fusion/Workspace/bookstore/backend
-    - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
-    - eval $(ssh-agent -s)
-    - ssh-add <(echo "$SSH_PRIVATE_KEY")
-    - mkdir -p ~/.ssh
-    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
-  script:
-    - ssh $SSH_USER@$SSH_HOST "cd /home/fusion/Workspace/bookstore/backend; git pull origin main"
-    - ssh $SSH_USER@$SSH_HOST "cd /home/fusion/Workspace/bookstore/backend; npm install"
-    - ssh $SSH_USER@$SSH_HOST "cd /home/fusion/Workspace/bookstore/backend; npm run build"
-    - ssh $SSH_USER@$SSH_HOST "/home/fusion/.nvm/versions/node/v18.5.0/bin/pm2 restart 0"
+sonarqube-check:
+  image: 
+    name: sonarsource/sonar-scanner-cli:latest
+    entrypoint: [""]
+  variables:
+    SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"  # Defines the location of the analysis task cache
+    GIT_DEPTH: "0"  # Tells git to fetch all the branches of the project, required by the analysis task
+  cache:
+    key: "${CI_JOB_NAME}"
+    paths:
+      - .sonar/cache
+  script: 
+    - sonar-scanner
+  allow_failure: true
   only:
+    - merge_requests
     - main
+    - develop
