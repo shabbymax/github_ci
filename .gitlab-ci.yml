@@ -1,4 +1,4 @@
-uild:
+build:
   image: alpine
   only:
       - gitlab_ci
@@ -14,6 +14,7 @@ uild:
       - ssh -o StrictHostKeyChecking=no $SSH_HOST "cd $REMOTE_PATH && pwd"
       - ssh -o StrictHostKeyChecking=no $SSH_HOST "cd $REMOTE_PATH && git pull origin gitlab_ci"
       - ssh -o StrictHostKeyChecking=no $SSH_HOST "cd $REMOTE_PATH && nvm use v21.7.2 && npm install"
+      - ssh -o StrictHostKeyChecking=no $SSH_HOST "cd $REMOTE_PATH && source ~/.nvm/nvm.sh"
       - ssh -o StrictHostKeyChecking=no $SSH_HOST "cd $REMOTE_PATH && npm install"
       - ssh -o StrictHostKeyChecking=no $SSH_HOST "cd $REMOTE_PATH && npm run build"
       - ssh -o StrictHostKeyChecking=no $SSH_HOST "echo "Операция успешно проведена!" "
