@@ -1,4 +1,4 @@
-build:
+uild:
   image: alpine
   only:
       - gitlab_ci
@@ -10,7 +10,10 @@ build:
       - mkdir -p ~/.ssh
       - echo "$SSH_PRIVATE_KEY" >> ~/.ssh/id_rsa
       - chmod 600 ~/.ssh
-      - ls -la ~/.ssh
-      - cat ~/.ssh/id_rsa
   script:
-      - echo "Test"
+      - ssh -o StrictHostKeyChecking=no $SSH_HOST "cd $REMOTE_PATH && pwd"
+      - ssh -o StrictHostKeyChecking=no $SSH_HOST "cd $REMOTE_PATH && git pull origin gitlab_ci"
+      - ssh -o StrictHostKeyChecking=no $SSH_HOST "cd $REMOTE_PATH && npm install"
+      - ssh -o StrictHostKeyChecking=no $SSH_HOST "cd $REMOTE_PATH && npm run build"
+      - ssh -o StrictHostKeyChecking=no $SSH_HOST "echo "Операция успешно проведена!" "
+      - exit_code=$?
