@@ -9,7 +9,7 @@ uild:
       - eval  $(ssh-agent -s)
       - mkdir -p ~/.ssh
       - echo "$SSH_PRIVATE_KEY" >> ~/.ssh/id_rsa
-      - chmod 644 ~/.ssh
+      - chmod 600 ~/.ssh/id_rsa
   script:
       - ssh -o StrictHostKeyChecking=no $SSH_HOST "cd $REMOTE_PATH && pwd"
       - ssh -o StrictHostKeyChecking=no $SSH_HOST "cd $REMOTE_PATH && git pull origin gitlab_ci"
