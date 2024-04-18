@@ -6,7 +6,7 @@ pipeline {
         echo "Connection..."
         sshagent(credentials: ['aws_jenkins_test']) {
             sh "ssh -o StrictHostKeyChecking=no ubuntu@54.193.204.29 'date'"
-            sh "ssh -o StrictHostKeyChecking=no ubuntu@54.193.204.29 'whoami'"
+#            sh "ssh -o StrictHostKeyChecking=no ubuntu@54.193.204.29 'whoami'"
         }
       }
     }
